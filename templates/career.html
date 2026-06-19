@@ -1,0 +1,126 @@
+{% extends "base.html" %}
+{% block title %}Trạm Hướng Nghiệp — Tizia{% endblock %}
+
+{% block content %}
+<div class="w-full min-h-screen flex flex-col pb-10">
+    <header class="bg-[#12182d] border-b border-[#1f294d] px-6 py-3 flex justify-between items-center">
+        <div class="flex items-center space-x-4">
+            <a href="/" class="bg-[#1e2640] hover:bg-[#2e3a60] text-gray-300 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all">
+                <i class="fa-solid fa-arrow-left mr-1"></i> Quay lại Bản đồ
+            </a>
+            <span class="text-gray-400">|</span>
+            <span class="text-sm text-gray-300"><i class="fa-solid fa-compass-drafting mr-2 text-cyan-400"></i>Trạm Hướng Nghiệp</span>
+        </div>
+        <div class="flex items-center space-x-3 text-xs">
+            <span class="text-yellow-400 font-semibold"><i class="fa-solid fa-medal mr-1"></i>Cấp {{ user['level'] }}</span>
+            <span class="text-orange-400"><i class="fa-solid fa-fire mr-1"></i>{{ user['xp'] }} XP</span>
+        </div>
+    </header>
+
+    <div class="max-w-7xl mx-auto px-6 mt-6 w-full flex-grow">
+        <div class="bg-[#12182d] p-8 rounded-2xl border border-[#1f294d] shadow-lg mb-8">
+            <h1 class="text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-white to-gray-400 mb-2">
+                Trạm Giả lập Nghề nghiệp
+            </h1>
+            <p class="text-gray-400 text-sm">Định hướng bản thân, khám phá thế giới công việc thực tế.</p>
+        </div>
+
+        <div class="mb-10">
+            <h2 class="text-xs font-bold tracking-widest text-amber-500 uppercase mb-4 flex items-center">
+                <span class="w-1 h-3 bg-amber-500 mr-2 inline-block"></span> I. Định hướng & Chia sẻ Kiến thức
+            </h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="bg-[#12182d] p-6 rounded-2xl border border-[#1f294d] flex flex-col justify-between">
+                    <div>
+                        <div class="text-cyan-400 text-3xl mb-4"><i class="fa-solid fa-compass"></i></div>
+                        <h3 class="text-lg font-bold mb-2">AI Career Quiz</h3>
+                        <p class="text-gray-400 text-xs mb-6">Trò chuyện ngắn với AI Coach để khám phá thế mạnh của bạn.</p>
+                    </div>
+                    <button onclick="openQuizModal()" class="w-full bg-[#0284c7] hover:bg-[#0369a1] text-white py-2 rounded-xl font-medium transition-all text-xs">VÀO TRẢI NGHIỆM</button>
+                </div>
+                <!-- Card 2: Cẩm nang nghề nghiệp -->
+        <div class="bg-[#12182d] p-6 rounded-2xl border border-[#1f294d] flex flex-col justify-between">
+            <div>
+                <div class="text-purple-400 text-3xl mb-4"><i class="fa-solid fa-book-open"></i></div>
+                <h3 class="text-lg font-bold mb-2">Cẩm nang nghề nghiệp</h3>
+                <p class="text-gray-400 text-xs mb-6">Tổng hợp thẻ kiến thức về vai trò hằng ngày của: Developer, Tester, Cybersecurity, Data Analyst.</p>
+            </div>
+            <a href="/career/handbook" class="w-full border border-gray-500/40 text-gray-300 py-2 rounded-xl font-medium transition-all text-xs text-center block hover:bg-[#1e2640]">ĐỌC CẨM NANG</a>
+        </div>
+
+        <!-- Card 3: Ví dụ thực tế -->
+        <div class="bg-[#12182d] p-6 rounded-2xl border border-[#1f294d] flex flex-col justify-between"><div>
+             <div class="text-emerald-400 text-3xl mb-4"><i class="fa-solid fa-lightbulb"></i></div>
+                <h3 class="text-lg font-bold mb-2">Ví dụ thực tế & Case Study</h3>
+                <p class="text-gray-400 text-xs mb-6">Xem ví dụ thực tế về cách các phòng ban phối hợp để hoàn thành một dự án phần mềm ngoài đời thực.</p>
+            </div>
+                <a href="/career/case-study" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white py-2 rounded-xl font-medium transition-all text-xs text-center block">XEM VÍ DỤ</a>
+        </div>
+                </div>
+            </div>
+        <div class="mb-10">
+            <h2 class="text-xs font-bold tracking-widest text-amber-500 uppercase mb-4 flex items-center">
+                <span class="w-1 h-3 bg-amber-500 mr-2 inline-block"></span> II. Play Roles — Dự án giả lập "Vina-App"
+            </h2>
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+                <div class="bg-[#12182d] p-6 rounded-2xl border border-[#1f294d] flex flex-col justify-between">
+                    <div>
+                        <div class="text-orange-500 text-3xl mb-4"><i class="fa-solid fa-code"></i></div>
+                        <h3 class="text-lg font-bold mb-1">Lập trình viên</h3>
+                        <span class="text-[10px] text-orange-500 font-semibold uppercase block mb-2">Developer</span>
+                        <p class="text-gray-400 text-xs mb-6">Sửa lỗi giao diện nút Đăng nhập bị lệch của VinaApp.</p>
+                    </div>
+                    <button class="w-full bg-[#d97706] hover:bg-[#b45309] text-white py-2 rounded-xl font-medium transition-all text-xs"><a href="/career/play/developer">CHƠI NGAY</a></button>
+                </div>
+                <div class="bg-[#12182d] p-6 rounded-2xl border border-[#1f294d] flex flex-col justify-between">
+                    <div>
+                        <div class="text-pink-500 text-3xl mb-4"><i class="fa-solid fa-bug"></i></div>
+                        <h3 class="text-lg font-bold mb-1">Kiểm thử viên</h3>
+                        <span class="text-[10px] text-pink-500 font-semibold uppercase block mb-2">QA/QC Tester</span>
+                        <p class="text-gray-400 text-xs mb-6">Tìm và báo cáo 3 lỗi cài cắm sẵn trên ứng dụng thanh toán ảo.</p>
+                    </div>
+                    <button onclick="openTesterModal()" class="w-full bg-[#d97706] hover:bg-[#b45309] text-white py-2 rounded-xl font-medium transition-all text-xs">CHƠI NGAY</button>
+                </div>
+                <div class="bg-[#12182d] p-6 rounded-2xl border border-[#1f294d] flex flex-col justify-between">
+                    <div>
+                        <div class="text-red-500 text-3xl mb-4"><i class="fa-solid fa-shield-halved"></i></div>
+                        <h3 class="text-lg font-bold mb-1">Kỹ sư Bảo mật</h3>
+                        <span class="text-[10px] text-red-500 font-semibold uppercase block mb-2">Cybersecurity</span>
+                        <p class="text-gray-400 text-xs mb-6">Phân tích lỗ hổng bảo mật và thực hành vá lỗi hệ thống.</p>
+                    </div>
+                    <button class="w-full bg-[#d97706] hover:bg-[#b45309] text-white py-2 rounded-xl font-medium transition-all text-xs"><a href="/career/play/cybersecurity">CHƠI NGAY</a></button>
+                </div>
+                <div class="bg-[#12182d] p-6 rounded-2xl border border-[#1f294d] flex flex-col justify-between">
+                    <div>
+                        <div class="text-yellow-400 text-3xl mb-4"><i class="fa-solid fa-chart-pie"></i></div>
+                        <h3 class="text-lg font-bold mb-1">Nhà phân tích</h3>
+                        <span class="text-[10px] text-yellow-400 font-semibold uppercase block mb-2">Data Analyst</span>
+                        <p class="text-gray-400 text-xs mb-6">Thiết kế biểu đồ để tìm nguyên nhân doanh số sụt giảm.</p>
+                    </div>
+                    <button class="w-full bg-[#d97706] hover:bg-[#b45309] text-white py-2 rounded-xl font-medium transition-all text-xs"><a href="/career/play/data_analyst">CHƠI NGAY</a></button>
+                </div>
+            </div>
+        </div>
+
+        <div class="bg-[#12182d] p-6 rounded-2xl border border-[#1f294d]">
+            <h2 class="text-xs font-bold tracking-widest text-amber-500 uppercase mb-4">Kỹ năng đã mở khóa</h2>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+                {% set all_skills = ["Định hướng nghề CNTT", "Giải quyết vấn đề giả lập", "Tư duy bảo mật cơ bản", "Phân tích dữ liệu nhập môn"] %}
+                {% for skill in all_skills %}
+                <label class="flex items-center space-x-2">
+                    <input type="checkbox" {% if skill in badges %}checked{% endif %} disabled class="rounded border-gray-600 text-cyan-500">
+                    <span class="text-xs {% if skill in badges %}text-emerald-400 font-semibold{% else %}text-gray-500{% endif %}">
+                        {{ skill }}
+                        {% if skill in badges %}<i class="fa-solid fa-check-circle ml-1 text-emerald-400"></i>{% endif %}
+                    </span>
+                </label>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% include "partials/quiz_modal.html" %}
+{% include "partials/tester_modal.html" %}
+{% endblock %}

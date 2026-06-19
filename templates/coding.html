@@ -1,0 +1,108 @@
+{% extends "base.html" %}
+{% block title %}Lab Lập Trình — Tizia{% endblock %}
+
+{% block content %}
+<div class="w-full min-h-screen flex flex-col pb-10">
+    <header class="bg-[#12182d] border-b border-[#1f294d] px-6 py-3 flex justify-between items-center">
+        <div class="flex items-center space-x-4">
+            <a href="/" class="bg-[#1e2640] hover:bg-[#2e3a60] text-gray-300 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all">
+                <i class="fa-solid fa-arrow-left mr-1"></i> Quay lại Bản đồ
+            </a>
+            <span class="text-gray-400">|</span>
+            <span class="text-sm text-gray-300"><i class="fa-solid fa-code mr-2 text-blue-400"></i>Lab Lập Trình</span>
+        </div>
+    </header>
+
+    <div class="max-w-7xl mx-auto px-6 mt-6 w-full flex-grow">
+        <div class="bg-[#12182d] p-8 rounded-2xl border border-[#1f294d] shadow-lg mb-8">
+            <h1 class="text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-white to-gray-400 mb-2">
+                Lab Lập trình
+            </h1>
+            <p class="text-gray-400 text-sm">Viết code, debug, rèn thói quen clean code và đấu trường giải thuật.</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div class="bg-[#12182d] p-6 rounded-2xl border border-[#1f294d] flex flex-col justify-between">
+    <div>
+        <div class="text-blue-400 text-3xl mb-4"><i class="fa-solid fa-laptop"></i></div>
+        <h3 class="text-lg font-bold mb-2">Code Lab — Python nhập môn</h3>
+        <p class="text-gray-400 text-xs mb-4">Chọn bài tập để bắt đầu:</p>
+        <div class="space-y-2 mb-4">
+            <button onclick="CodingModule.openTask('TIZIA_PY_001')" class="w-full text-left bg-[#1a203c] hover:bg-[#232b50] text-xs text-gray-300 px-3 py-2 rounded-lg border border-[#1f294d]">
+                <i class="fa-solid fa-circle-play mr-2 text-blue-400"></i>Bài 1: Tính tổng dãy số
+            </button>
+            <button onclick="CodingModule.openTask('TIZIA_PY_002')" class="w-full text-left bg-[#1a203c] hover:bg-[#232b50] text-xs text-gray-300 px-3 py-2 rounded-lg border border-[#1f294d]">
+                <i class="fa-solid fa-circle-play mr-2 text-blue-400"></i>Bài 2: Đếm số chẵn
+            </button>
+        </div>
+    </div>
+    </div>
+
+            <div class="bg-[#12182d] p-6 rounded-2xl border border-blue-500/60 shadow-[0_0_15px_rgba(59,130,246,0.15)] flex flex-col justify-between">
+    <div>
+        <div class="text-yellow-400 text-3xl mb-4"><i class="fa-solid fa-trophy"></i></div>
+        <h3 class="text-lg font-bold mb-2">Đấu trường Thuật toán</h3>
+        <p class="text-gray-400 text-xs mb-4">Chọn độ khó và bắt đầu thi đấu:</p>
+        <div class="space-y-2">
+            <button onclick="CodingModule.openTask('TIZIA_ALGO_001')" class="w-full text-left bg-[#1a203c] hover:bg-[#232b50] text-xs text-gray-300 px-3 py-2 rounded-lg border border-[#1f294d] flex justify-between items-center">
+                <span><i class="fa-solid fa-circle-play mr-2 text-emerald-400"></i>Tìm số lớn nhất</span>
+                <span class="text-[10px] bg-emerald-500/20 text-emerald-400 px-2 py-0.5 rounded">Easy</span>
+            </button>
+            <button onclick="CodingModule.openTask('TIZIA_ALGO_003')" class="w-full text-left bg-[#1a203c] hover:bg-[#232b50] text-xs text-gray-300 px-3 py-2 rounded-lg border border-[#1f294d] flex justify-between items-center">
+                <span><i class="fa-solid fa-circle-play mr-2 text-emerald-400"></i>Đảo chuỗi</span>
+                <span class="text-[10px] bg-emerald-500/20 text-emerald-400 px-2 py-0.5 rounded">Easy</span>
+            </button>
+            <button onclick="CodingModule.openTask('TIZIA_ALGO_002')" class="w-full text-left bg-[#1a203c] hover:bg-[#232b50] text-xs text-gray-300 px-3 py-2 rounded-lg border border-[#1f294d] flex justify-between items-center">
+                <span><i class="fa-solid fa-circle-play mr-2 text-yellow-400"></i>Kiểm tra số nguyên tố</span>
+                <span class="text-[10px] bg-yellow-500/20 text-yellow-400 px-2 py-0.5 rounded">Medium</span>
+            </button>
+            <button onclick="CodingModule.openTask('TIZIA_ALGO_004')" class="w-full text-left bg-[#1a203c] hover:bg-[#232b50] text-xs text-gray-300 px-3 py-2 rounded-lg border border-[#1f294d] flex justify-between items-center">
+                <span><i class="fa-solid fa-circle-play mr-2 text-yellow-400"></i>Fibonacci thứ N</span>
+                <span class="text-[10px] bg-yellow-500/20 text-yellow-400 px-2 py-0.5 rounded">Medium</span>
+            </button>
+        </div>
+    </div>
+</div>
+
+            <div class="bg-[#12182d] p-6 rounded-2xl border border-[#1f294d] flex flex-col justify-between">
+    <div>
+        <div class="text-pink-500 text-3xl mb-4"><i class="fa-solid fa-bug"></i></div>
+        <h3 class="text-lg font-bold mb-2">Quy trình debug</h3>
+        <p class="text-gray-400 text-xs mb-6">Tìm & sửa lỗi có hệ thống theo quy chuẩn dự án.</p>
+    </div>
+    <a href="/coding/debug-lab" class="w-full bg-pink-600 hover:bg-pink-700 text-white py-2 rounded-xl font-medium transition-all text-xs text-center block">KHÁM PHÁ</a>
+</div>
+        </div>
+    </div>
+</div>
+
+<div id="coding-modal" class="hidden fixed inset-0 bg-slate-950/80 backdrop-blur flex items-center justify-center z-50 p-4">
+    <div class="bg-[#12182d] border border-[#1f294d] rounded-2xl max-w-4xl w-full h-[600px] flex flex-col shadow-2xl overflow-hidden">
+        <div class="bg-[#1b2240] px-6 py-4 border-b border-[#1f294d] flex justify-between items-center">
+            <div class="flex items-center space-x-2">
+                <span class="text-yellow-400"><i class="fa-solid fa-code"></i></span>
+                <h3 class="font-bold text-gray-200" id="modal-task-title">Đang tải đề bài...</h3>
+                <span id="modal-task-difficulty" class="text-[10px] bg-emerald-500/20 text-emerald-400 px-2 py-0.5 rounded"></span>
+            </div>
+            <button onclick="closeCodingModal()" class="text-gray-400 hover:text-white transition-all">
+                <i class="fa-solid fa-xmark text-lg"></i>
+            </button>
+        </div>
+        <div class="flex flex-1 overflow-hidden">
+            <div class="w-1/2 p-6 border-r border-[#1f294d] overflow-y-auto">
+                <h4 class="text-xs font-bold text-gray-400 uppercase mb-3">Đề bài</h4>
+                <p id="modal-task-desc" class="text-sm text-gray-300 whitespace-pre-line"></p>
+            </div>
+            <div class="w-1/2 flex flex-col p-6">
+                <textarea id="code-editor" class="flex-1 bg-[#0b0e1e] text-gray-200 font-mono text-sm p-4 rounded-xl border border-[#1f294d] resize-none focus:outline-none focus:border-cyan-500"></textarea>
+                <div class="flex justify-between items-center mt-3">
+                    <span id="compiler-message" class="text-xs text-gray-400">Sẵn sàng chạy test cases...</span>
+                    <button onclick="submitCode()" class="bg-cyan-600 hover:bg-cyan-700 text-white px-4 py-2 rounded-lg text-xs font-bold">
+                        <i class="fa-solid fa-play mr-1"></i> Nộp bài
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

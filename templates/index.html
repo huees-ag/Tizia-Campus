@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+{% block title %}Bản đồ Campus — Tizia Tech{% endblock %}
+
+{% block content %}
+<div class="w-full min-h-screen flex flex-col justify-between p-6">
+
+    <header class="bg-[#12182d]/80 backdrop-blur border border-[#1f294d] px-6 py-3 rounded-2xl flex justify-between items-center z-10 shadow-lg">
+        <div class="flex items-center space-x-4">
+            <span class="text-xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-500">
+                Tizia Tech Campus
+            </span>
+        </div>
+        <div class="flex items-center space-x-4 text-sm font-semibold">
+            <span class="bg-[#1e2640] px-3 py-1.5 rounded-full border border-yellow-500/30 text-yellow-400" id="user-level-badge">
+                <i class="fa-solid fa-medal mr-1"></i>Cấp {{ user['level'] if user else '?' }}
+            </span>
+            <span class="text-orange-500 bg-[#1e2640]/50 px-3 py-1.5 rounded-full border border-[#1f294d]" id="user-xp-badge">
+                <i class="fa-solid fa-fire mr-1"></i> {{ user['xp'] if user else 0 }} XP
+            </span>
+        </div>
+    </header>
+
+    <div class="isometric-container w-full h-[720px] flex items-center justify-center relative my-2">
+        <div class="isometric-map w-[950px] h-[650px] bg-[#161c33] rounded-3xl border-4 border-[#1f294d] relative shadow-[0_30px_60px_rgba(0,0,0,0.6)] flex items-center justify-center">
+
+            <div class="absolute bottom-20 left-20 isometric-building text-center">
+                <div class="w-16 h-12 bg-orange-600/20 border-2 border-orange-500 rounded-xl flex items-center justify-center text-orange-400">
+                    <i class="fa-solid fa-shield-halved text-xl"></i>
+                </div>
+                <span class="text-[10px] bg-[#0b0e1e] px-1.5 py-0.5 rounded border border-[#1f294d] mt-2 block font-semibold text-orange-400">Cổng Firewall</span>
+            </div>
+
+            <div class="absolute top-[38%] left-[28%] isometric-building text-center">
+                <div class="w-20 h-20 bg-cyan-900/40 border-4 border-cyan-500/30 rounded-full flex flex-col items-center justify-center relative">
+                    <span class="text-lg absolute top-3 left-5 animate-bounce">🦆</span>
+                    <span class="text-[8px] font-mono bg-cyan-500 text-[#0b0e1e] px-1 py-0.5 rounded font-bold animate-pulse">Hello World</span>
+                </div>
+                <span class="text-[10px] bg-[#0b0e1e] px-1.5 py-0.5 rounded border border-[#1f294d] mt-3 block text-cyan-400 font-medium">Hồ Lofi Chữa Lành</span>
+            </div>
+
+            <a href="/career" class="absolute isometric-building text-center cursor-pointer" style="top: 40%; left: 10%;">
+                <div class="w-20 h-24 bg-[#12182d] border-4 border-cyan-400 rounded-2xl flex flex-col items-center justify-center shadow-lg">
+                    <i class="fa-solid fa-compass-drafting text-3xl text-cyan-400"></i>
+                    <span class="text-[8px] text-cyan-400 font-bold mt-2">CAREER</span>
+                </div>
+                <span class="text-xs bg-[#0b0e1e] px-2.5 py-1 rounded-full border border-cyan-400 mt-3 block font-bold text-cyan-400">Trạm Hướng Nghiệp</span>
+            </a>
+
+            <a href="/hitech" class="absolute isometric-building text-center cursor-pointer" style="top: 12%; left: 52%;">
+                <div class="w-20 h-24 bg-[#12182d] border-4 border-purple-400 rounded-2xl flex flex-col items-center justify-center shadow-lg">
+                    <i class="fa-solid fa-laptop-code text-3xl text-purple-400"></i>
+                    <span class="text-[8px] text-purple-400 font-bold mt-2">HI-TECH</span>
+                </div>
+                <span class="text-xs bg-[#0b0e1e] px-2.5 py-1 rounded-full border border-purple-400 mt-3 block font-bold text-purple-400">Tòa Lab Công Nghệ Cao</span>
+            </a>
+
+            <a href="/coding" class="absolute isometric-building text-center cursor-pointer" style="top: 45%; right: 15%;">
+                <div class="w-20 h-24 bg-[#12182d] border-4 border-blue-400 rounded-2xl flex flex-col items-center justify-center shadow-lg">
+                    <i class="fa-solid fa-code text-3xl text-blue-400"></i>
+                    <span class="text-[8px] text-blue-400 font-bold mt-2">CODELAB</span>
+                </div>
+                <span class="text-xs bg-[#0b0e1e] px-2.5 py-1 rounded-full border border-blue-400 mt-3 block font-bold text-blue-400">Lab Lập Trình</span>
+            </a>
+
+        </div>
+    </div>
+
+    <footer class="bg-[#12182d]/80 backdrop-blur border border-[#1f294d] p-4 rounded-2xl flex justify-between items-center text-xs text-gray-400 z-10">
+        <div><i class="fa-solid fa-circle text-emerald-500 mr-2 animate-pulse"></i>Hệ thống AI Tizia đang điều hành toàn bộ khuôn viên</div>
+        <div class="flex space-x-4">
+            <span>Học viên: <strong class="text-cyan-400">{{ user['username'] if user else 'Khách' }}</strong></span>
+        </div>
+    </footer>
+</div>
+{% endblock %}

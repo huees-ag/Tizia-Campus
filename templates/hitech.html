@@ -1,0 +1,200 @@
+{% extends "base.html" %}
+{% block title %}Lab Công Nghệ Cao — Tizia{% endblock %}
+
+{% block content %}
+<div class="w-full min-h-screen flex flex-col pb-10">
+    <header class="bg-[#12182d] border-b border-[#1f294d] px-6 py-3 flex justify-between items-center">
+        <div class="flex items-center space-x-4">
+            <a href="/" class="bg-[#1e2640] hover:bg-[#2e3a60] text-gray-300 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all">
+                <i class="fa-solid fa-arrow-left mr-1"></i> Quay lại Bản đồ
+            </a>
+            <span class="text-gray-400">|</span>
+            <span class="text-sm text-gray-300"><i class="fa-solid fa-laptop-code mr-2 text-purple-400"></i>Tòa Lab Công Nghệ Cao</span>
+        </div>
+    </header>
+
+    <div class="max-w-7xl mx-auto px-6 mt-6 w-full flex-grow">
+        <div class="bg-[#12182d] p-8 rounded-2xl border border-[#1f294d] shadow-lg mb-8">
+            <h1 class="text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-white to-gray-400 mb-2">
+                Tòa nhà Lab Công nghệ cao
+            </h1>
+            <p class="text-gray-400 text-sm">Trực quan hóa thuật toán, vi mạch phần cứng và mạng nơ-ron.</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div class="bg-[#12182d] p-6 rounded-2xl border border-[#1f294d] flex flex-col justify-between">
+                <div>
+                    <div class="text-blue-400 text-3xl mb-4"><i class="fa-solid fa-server"></i></div>
+                    <h3 class="text-lg font-bold mb-2">Hầm máy chủ chất lỏng</h3>
+                    <p class="text-gray-400 text-xs mb-6">Mô phỏng tủ rack và hệ thống làm mát chất lỏng.</p>
+                </div>
+                <button onclick="openCoolingModal()" class="w-full bg-[#8b5cf6] hover:bg-[#7c3aed] text-white py-2 rounded-xl font-medium transition-all text-xs">VÀO TRẢI NGHIỆM</button>
+            </div>
+            <div class="bg-[#12182d] p-6 rounded-2xl border border-[#1f294d] flex flex-col justify-between">
+                <div>
+                    <div class="text-cyan-400 text-3xl mb-4"><i class="fa-solid fa-road"></i></div>
+                    <h3 class="text-lg font-bold mb-2">Đường hầm Thuật toán</h3>
+                    <p class="text-gray-400 text-xs mb-6">Trực quan hóa Bubble Sort, Quick Sort qua hoạt họa.</p>
+                </div>
+                <button onclick="openSortModal()" class="w-full bg-[#8b5cf6] hover:bg-[#7c3aed] text-white py-2 rounded-xl font-medium transition-all text-xs">VÀO TRẢI NGHIỆM</button>            </div>
+            <div class="bg-[#12182d] p-6 rounded-2xl border border-[#1f294d] flex flex-col justify-between">
+                <div>
+                    <div class="text-amber-500 text-3xl mb-4"><i class="fa-solid fa-microchip"></i></div>
+                    <h3 class="text-lg font-bold mb-2">Lab Vi mạch 2D</h3>
+                    <p class="text-gray-400 text-xs mb-6">Mô phỏng sơ đồ khối CPU, cổng logic AND/OR/NOT.</p>
+                </div>
+                <button onclick="openLogicModal()" class="w-full bg-[#8b5cf6] hover:bg-[#7c3aed] text-white py-2 rounded-xl font-medium transition-all text-xs">VÀO TRẢI NGHIỆM</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="sort-modal" class="hidden fixed inset-0 bg-slate-950/80 backdrop-blur flex items-center justify-center z-50 p-4">
+    <div class="bg-[#12182d] border border-[#1f294d] rounded-2xl max-w-3xl w-full shadow-2xl overflow-hidden">
+        <div class="bg-[#1b2240] px-6 py-4 border-b border-[#1f294d] flex justify-between items-center">
+            <div class="flex items-center space-x-2">
+                <span class="text-cyan-400"><i class="fa-solid fa-road"></i></span>
+                <h3 class="font-bold text-gray-200">Đường hầm Thuật toán Sắp xếp</h3>
+            </div>
+            <button onclick="closeSortModal()" class="text-gray-400 hover:text-white transition-all">
+                <i class="fa-solid fa-xmark text-lg"></i>
+            </button>
+        </div>
+
+        <div class="p-6">
+            <!-- Chọn thuật toán -->
+            <div class="flex items-center justify-between mb-4">
+                <div class="flex space-x-2">
+                    <button onclick="SortModule.setAlgorithm('bubble')" id="algo-bubble" class="px-4 py-2 rounded-lg text-xs font-semibold bg-cyan-500 text-white">Bubble Sort</button>
+                    <button onclick="SortModule.setAlgorithm('quick')" id="algo-quick" class="px-4 py-2 rounded-lg text-xs font-semibold bg-[#1e2640] text-gray-300">Quick Sort</button>
+                </div>
+                <div class="flex space-x-2">
+                    <button onclick="SortModule.shuffle()" class="px-3 py-2 rounded-lg text-xs bg-[#1e2640] text-gray-300 hover:bg-[#2e3a60]">
+                        <i class="fa-solid fa-shuffle mr-1"></i>Random
+                    </button>
+                    <button onclick="SortModule.start()" id="sort-start-btn" class="px-4 py-2 rounded-lg text-xs font-bold bg-emerald-600 hover:bg-emerald-700 text-white">
+                        <i class="fa-solid fa-play mr-1"></i>Chạy
+                    </button>
+                </div>
+            </div>
+
+            <!-- Canvas hiển thị cột -->
+            <div class="bg-[#0b0e1e] rounded-xl border border-[#1f294d] p-4">
+                <canvas id="sort-canvas" width="680" height="320" class="w-full"></canvas>
+            </div>
+
+            <!-- Tốc độ + thống kê -->
+            <div class="flex justify-between items-center mt-4 text-xs text-gray-400">
+                <div class="flex items-center space-x-3">
+                    <span>Tốc độ:</span>
+                    <input type="range" id="sort-speed" min="10" max="200" value="80" class="w-32">
+                </div>
+                <div class="flex space-x-4">
+                    <span>So sánh: <strong id="sort-comparisons" class="text-cyan-400">0</strong></span>
+                    <span>Đổi chỗ: <strong id="sort-swaps" class="text-orange-400">0</strong></span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="cooling-modal" class="hidden fixed inset-0 bg-slate-950/80 backdrop-blur flex items-center justify-center z-50 p-4">
+    <div class="bg-[#12182d] border border-[#1f294d] rounded-2xl max-w-2xl w-full shadow-2xl overflow-hidden">
+        <div class="bg-[#1b2240] px-6 py-4 border-b border-[#1f294d] flex justify-between items-center">
+            <div class="flex items-center space-x-2">
+                <span class="text-blue-400"><i class="fa-solid fa-server"></i></span>
+                <h3 class="font-bold text-gray-200">Hầm máy chủ chất lỏng</h3>
+            </div>
+            <button onclick="closeCoolingModal()" class="text-gray-400 hover:text-white transition-all">
+                <i class="fa-solid fa-xmark text-lg"></i>
+            </button>
+        </div>
+
+        <div class="p-6">
+            <p class="text-xs text-gray-400 mb-6">
+                Server đang chạy ở tải cao khiến nhiệt độ tăng. Điều chỉnh công suất bơm quạt làm mát chất lỏng để giữ nhiệt độ trong ngưỡng an toàn (dưới 70°C) mà không tốn quá nhiều điện năng.
+            </p>
+
+            <div class="grid grid-cols-2 gap-6 mb-6">
+                <!-- Rack server visualization -->
+                <div class="bg-[#0b0e1e] rounded-xl border border-[#1f294d] p-4 flex flex-col items-center justify-center">
+                    <div id="server-rack" class="w-20 h-32 bg-gradient-to-b from-orange-500 to-red-600 rounded-lg border-4 border-gray-700 flex items-center justify-center transition-colors duration-500">
+                        <i class="fa-solid fa-microchip text-white text-2xl"></i>
+                    </div>
+                    <p class="text-xs text-gray-400 mt-3">Nhiệt độ Server</p>
+                    <p id="temp-display" class="text-3xl font-bold text-red-400 mt-1">85°C</p>
+                </div>
+
+                <!-- Controls -->
+                <div class="flex flex-col justify-center space-y-6">
+                    <div>
+                        <label class="text-xs text-gray-400 mb-2 block">
+                            Công suất bơm quạt: <span id="pump-value" class="text-cyan-400 font-bold">30%</span>
+                        </label>
+                        <input type="range" id="pump-slider" min="0" max="100" value="30"
+                               oninput="CoolingModule.updatePump(this.value)"
+                               class="w-full">
+                    </div>
+                    <div class="bg-[#0b0e1e] rounded-lg p-3 border border-[#1f294d]">
+                        <p class="text-xs text-gray-400">Điện năng tiêu thụ:</p>
+                        <p id="power-display" class="text-lg font-bold text-yellow-400">45W</p>
+                    </div>
+                </div>
+            </div>
+
+            <div id="cooling-feedback" class="hidden bg-emerald-950/20 border border-emerald-500/40 rounded-xl p-4 text-center">
+                <i class="fa-solid fa-circle-check text-emerald-400 mb-2"></i>
+                <p class="text-emerald-400 text-sm font-semibold">Đạt nhiệt độ an toàn với mức điện năng tối ưu!</p>
+                <button onclick="CoolingModule.complete()" class="mt-3 bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-lg text-xs font-bold">Hoàn thành (+60 XP)</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="logic-modal" class="hidden fixed inset-0 bg-slate-950/80 backdrop-blur flex items-center justify-center z-50 p-4">
+    <div class="bg-[#12182d] border border-[#1f294d] rounded-2xl max-w-2xl w-full shadow-2xl overflow-hidden">
+        <div class="bg-[#1b2240] px-6 py-4 border-b border-[#1f294d] flex justify-between items-center">
+            <div class="flex items-center space-x-2">
+                <span class="text-amber-400"><i class="fa-solid fa-microchip"></i></span>
+                <h3 class="font-bold text-gray-200">Lab Vi mạch — Cổng Logic</h3>
+            </div>
+            <button onclick="closeLogicModal()" class="text-gray-400 hover:text-white transition-all">
+                <i class="fa-solid fa-xmark text-lg"></i>
+            </button>
+        </div>
+
+        <div class="p-6">
+            <p class="text-xs text-gray-400 mb-6">
+                Chọn cổng logic, đổi giá trị Input A và B (0 hoặc 1) để xem Output thay đổi theo thời gian thực.
+            </p>
+
+            <div class="flex space-x-2 mb-6">
+                <button onclick="LogicModule.setGate('AND')" id="gate-AND" class="px-4 py-2 rounded-lg text-xs font-bold bg-amber-500 text-white">AND</button>
+                <button onclick="LogicModule.setGate('OR')" id="gate-OR" class="px-4 py-2 rounded-lg text-xs font-bold bg-[#1e2640] text-gray-300">OR</button>
+                <button onclick="LogicModule.setGate('NOT')" id="gate-NOT" class="px-4 py-2 rounded-lg text-xs font-bold bg-[#1e2640] text-gray-300">NOT</button>
+                <button onclick="LogicModule.setGate('XOR')" id="gate-XOR" class="px-4 py-2 rounded-lg text-xs font-bold bg-[#1e2640] text-gray-300">XOR</button>
+            </div>
+
+            <div class="bg-[#0b0e1e] rounded-xl border border-[#1f294d] p-8 flex items-center justify-center space-x-8">
+                <div class="flex flex-col space-y-4">
+                    <button onclick="LogicModule.toggleInput('A')" id="input-A" class="w-16 h-16 rounded-full bg-[#2e3a60] text-2xl font-bold text-gray-300 border-2 border-[#1f294d]">0</button>
+                    <button onclick="LogicModule.toggleInput('B')" id="input-B" class="w-16 h-16 rounded-full bg-[#2e3a60] text-2xl font-bold text-gray-300 border-2 border-[#1f294d]">0</button>
+                </div>
+
+                <i class="fa-solid fa-arrow-right text-gray-500 text-2xl"></i>
+
+                <div id="gate-box" class="w-24 h-24 bg-amber-500/20 border-4 border-amber-500 rounded-2xl flex items-center justify-center text-amber-400 font-bold text-lg">AND</div>
+
+                <i class="fa-solid fa-arrow-right text-gray-500 text-2xl"></i>
+
+                <div id="output-display" class="w-16 h-16 rounded-full bg-gray-700 text-2xl font-bold text-gray-300 border-2 border-[#1f294d] flex items-center justify-center">0</div>
+            </div>
+
+            <p class="text-center text-xs text-gray-500 mt-4">Click vào Input A/B để đổi giá trị 0 ↔ 1</p>
+
+            <div class="text-center mt-6">
+                <button onclick="LogicModule.complete()" class="bg-amber-600 hover:bg-amber-700 text-white px-6 py-2.5 rounded-xl text-sm font-bold">
+                    Đã hiểu cổng logic (+50 XP)
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

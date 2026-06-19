@@ -1,0 +1,65 @@
+/* ── 2.5D Isometric ── */
+.isometric-container { perspective: 1500px; }
+
+.isometric-map {
+    transform: rotateX(50deg) rotateZ(-45deg) scale(0.85);
+    transform-style: preserve-3d;
+    background-image: radial-gradient(#1f294d 1.5px, transparent 1.5px);
+    background-size: 24px 24px;
+    overflow: visible !important;
+}
+
+.isometric-building {
+    transform: rotateZ(45deg) rotateX(-50deg) translateZ(15px);
+    transform-origin: 50% 100%;
+    transform-style: preserve-3d;
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.isometric-building:hover {
+    transform: rotateZ(45deg) rotateX(-50deg) translateZ(35px) scale(1.05);
+    filter: drop-shadow(0 20px 25px rgba(6, 182, 212, 0.4));
+}
+
+/* ── Toast ── */
+.toast {
+    padding: 12px 20px;
+    border-radius: 12px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    animation: slideInRight 0.3s ease forwards;
+    max-width: 320px;
+    backdrop-filter: blur(8px);
+    border: 1px solid;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.toast-success {
+    background: rgba(16, 185, 129, 0.15);
+    border-color: rgba(16, 185, 129, 0.4);
+    color: #6ee7b7;
+}
+
+.toast-error {
+    background: rgba(239, 68, 68, 0.15);
+    border-color: rgba(239, 68, 68, 0.4);
+    color: #fca5a5;
+}
+
+.toast-info {
+    background: rgba(6, 182, 212, 0.15);
+    border-color: rgba(6, 182, 212, 0.4);
+    color: #67e8f9;
+}
+
+@keyframes slideInRight {
+    from { transform: translateX(100%); opacity: 0; }
+    to   { transform: translateX(0);   opacity: 1; }
+}
+
+@keyframes fadeOut {
+    from { opacity: 1; }
+    to   { opacity: 0; transform: translateY(10px); }
+}

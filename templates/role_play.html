@@ -1,0 +1,107 @@
+{% extends "base.html" %}
+{% block title %}{{ role.title }} — Tizia{% endblock %}
+
+{% block content %}
+<div class="w-full min-h-screen flex flex-col pb-10">
+    <header class="bg-[#12182d] border-b border-[#1f294d] px-6 py-3 flex justify-between items-center">
+        <div class="flex items-center space-x-4">
+            <a href="/career" class="bg-[#1e2640] hover:bg-[#2e3a60] text-gray-300 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all">
+                <i class="fa-solid fa-arrow-left mr-1"></i> Quay lại
+            </a>
+            <span class="text-gray-400">|</span>
+            <span class="text-sm text-gray-300">
+                <i class="fa-solid {{ role.icon }} mr-2 text-{{ role.color }}-400"></i>{{ role.title }}
+            </span>
+        </div>
+        <span class="text-[10px] bg-amber-500/20 text-amber-400 px-3 py-1 rounded-full border border-amber-500/30">
+            <i class="fa-solid fa-briefcase mr-1"></i> Dự án giả lập: VinaApp
+        </span>
+    </header>
+
+    <div class="max-w-4xl mx-auto px-6 mt-6 w-full flex-grow">
+
+        <div class="bg-[#12182d] p-8 rounded-2xl border border-{{ role.color }}-500/40 shadow-lg mb-6">
+            <div class="flex items-center space-x-3 mb-4">
+                <i class="fa-solid fa-clipboard-list text-{{ role.color }}-400 text-2xl"></i>
+                <h1 class="text-xl font-bold text-white">{{ mission.title }}</h1>
+            </div>
+            <p class="text-gray-300 text-sm whitespace-pre-line leading-relaxed">{{ mission.brief }}</p>
+        </div>
+
+        <div class="bg-[#12182d] p-6 rounded-2xl border border-[#1f294d] mb-6">
+            <h3 class="text-xs font-bold tracking-widest text-gray-400 uppercase mb-3">
+                <i class="fa-solid fa-pen-to-square mr-1"></i> Bài làm của bạn
+            </h3>
+            <textarea id="mission-input"
+                      placeholder="{{ mission.placeholder }}"
+                      class="w-full h-48 bg-[#0b0e1e] text-gray-200 {% if mission.input_type == 'code' %}font-mono{% endif %} text-sm p-4 rounded-xl border border-[#1f294d] resize-none focus:outline-none focus:border-{{ role.color }}-500"></textarea>
+
+            <div class="flex justify-between items-center mt-4">
+                <span id="mission-status" class="text-xs text-gray-500">Chưa nộp bài</span>
+                <button onclick="MissionModule.submit('{{ role.id }}')"
+                        id="mission-submit-btn"
+                        class="bg-{{ role.color }}-600 hover:bg-{{ role.color }}-700 text-white px-6 py-2.5 rounded-xl text-sm font-bold transition-all">
+                    <i class="fa-solid fa-paper-plane mr-1"></i> {{ mission.submit_label }}
+                </button>
+            </div>
+        </div>
+
+        <div id="mission-result" class="hidden bg-[#12182d] p-6 rounded-2xl border border-emerald-500/40">
+            <div class="flex items-center justify-between mb-3">
+                <h3 class="text-sm font-bold text-emerald-400">
+                    <i class="fa-solid fa-robot mr-1"></i> Kết quả đánh giá
+                </h3>
+                <span id="mission-score" class="text-2xl font-bold text-emerald-400">--/100</span>
+            </div>
+            <p id="mission-feedback" class="text-gray-300 text-sm leading-relaxed"></p>
+        </div>
+
+    </div>
+</div>
+
+<script>
+    const MissionModule = {
+        async submit(roleId) {
+            const content = document.getElementById('mission-input').value.trim();
+            const btn = document.getElementById('mission-submit-btn');
+            const statusEl = document.getElementById('mission-status');
+
+            if (!content) {
+                Toast.error('Bạn chưa nhập nội dung bài làm!');
+                return;
+            }
+
+            btn.disabled = true;
+            statusEl.textContent = '⏳ Đang gửi bài và chờ đánh giá...';
+            statusEl.className = 'text-xs text-yellow-400 animate-pulse';
+
+            try {
+                const res = await fetch(`/api/missions/${roleId}/submit`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ userId: USER_ID, content })
+                });
+                const result = await res.json();
+
+                if (result.success) {
+                    statusEl.textContent = '✓ Đã nộp bài thành công';
+                    statusEl.className = 'text-xs text-emerald-400 font-bold';
+
+                    document.getElementById('mission-result').classList.remove('hidden');
+                    document.getElementById('mission-score').textContent = `${result.score}/100`;
+                    document.getElementById('mission-feedback').textContent = result.feedback;
+
+                    Toast.success(`Nộp bài thành công! +${result.xp_earned} XP`);
+                    await UserModule.load();
+                } else {
+                    Toast.error(result.message);
+                    btn.disabled = false;
+                }
+            } catch (err) {
+                Toast.error('Lỗi kết nối server!');
+                btn.disabled = false;
+            }
+        }
+    };
+</script>
+{% endblock %}

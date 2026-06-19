@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% block title %}Case Study — Tizia{% endblock %}
+
+{% block content %}
+<div class="w-full min-h-screen flex flex-col pb-10">
+    <header class="bg-[#12182d] border-b border-[#1f294d] px-6 py-3 flex justify-between items-center">
+        <div class="flex items-center space-x-4">
+            <a href="/career" class="bg-[#1e2640] hover:bg-[#2e3a60] text-gray-300 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all">
+                <i class="fa-solid fa-arrow-left mr-1"></i> Quay lại
+            </a>
+            <span class="text-gray-400">|</span>
+            <span class="text-sm text-gray-300"><i class="fa-solid fa-lightbulb mr-2 text-emerald-400"></i>Case Study</span>
+        </div>
+    </header>
+
+    <div class="max-w-4xl mx-auto px-6 mt-6 w-full flex-grow">
+        {% for case in cases %}
+        <div class="bg-[#12182d] p-8 rounded-2xl border border-[#1f294d] shadow-lg mb-6">
+            <h1 class="text-2xl font-bold text-white mb-2">{{ case.title }}</h1>
+            <p class="text-gray-400 text-sm mb-8">{{ case.summary }}</p>
+
+            <div class="relative pl-6 border-l-2 border-[#1f294d] space-y-6">
+                {% for step in case.timeline %}
+                <div class="relative">
+                    <div class="absolute -left-[31px] top-0 w-4 h-4 rounded-full bg-{{ step.color }}-500 border-2 border-[#12182d]"></div>
+                    <span class="text-[10px] font-bold uppercase text-{{ step.color }}-400">{{ step.role }}</span>
+                    <p class="text-sm text-gray-300 mt-1">{{ step.action }}</p>
+                </div>
+                {% endfor %}
+            </div>
+
+            <div class="mt-8 bg-emerald-950/20 border border-emerald-500/30 rounded-xl p-4">
+                <p class="text-sm text-emerald-400"><i class="fa-solid fa-graduation-cap mr-2"></i>{{ case.lesson }}</p>
+            </div>
+
+            <button onclick="CaseStudyModule.complete()" class="mt-6 bg-emerald-600 hover:bg-emerald-700 text-white px-6 py-2.5 rounded-xl text-sm font-bold">
+                Đã đọc xong (+40 XP)
+            </button>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+<script>
+    const CaseStudyModule = {
+        async complete() {
+            await UserModule.addXP(40);
+            await UserModule.addBadge('Hiểu quy trình teamwork dự án');
+            Toast.success('+40 XP! Đã hiểu cách các vai trò phối hợp.');
+            await UserModule.load();
+        }
+    };
+</script>
+{% endblock %}

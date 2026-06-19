@@ -1,0 +1,70 @@
+<div id="tester-modal" class="hidden fixed inset-0 bg-slate-950/80 backdrop-blur flex items-center justify-center z-50 p-4">
+    <div class="bg-[#12182d] border border-[#1f294d] rounded-2xl max-w-4xl w-full h-[600px] flex flex-col shadow-2xl overflow-hidden">
+        <div class="bg-[#1b2240] px-6 py-4 border-b border-[#1f294d] flex justify-between items-center">
+            <div class="flex items-center space-x-2">
+                <span class="text-pink-400"><i class="fa-solid fa-bug"></i></span>
+                <h3 class="font-bold text-gray-200">Tester Mini-game — VinaApp</h3>
+            </div>
+            <button onclick="closeTesterModal()" class="text-gray-400 hover:text-white transition-all">
+                <i class="fa-solid fa-xmark text-lg"></i>
+            </button>
+        </div>
+
+        <div class="flex flex-1 overflow-hidden p-6 gap-6">
+            <!-- Bên trái: điện thoại ảo -->
+            <div class="w-1/2 flex items-center justify-center">
+                <div class="relative bg-[#0b0e1e] border-4 border-[#1f294d] rounded-3xl w-64 h-96 p-4 flex flex-col">
+                    <p class="text-xs text-gray-400 mb-2">VinaApp — Mua vé xem phim</p>
+
+                    <div class="bg-[#1a203c] p-3 rounded-lg mb-3 relative">
+                        <p class="text-[10px] text-gray-400">Số lượng vé:</p>
+                        <div class="flex items-center justify-between mt-1">
+                            <button onclick="changeQty(-1)" class="bg-[#2e3a60] w-7 h-7 rounded text-white">-</button>
+                            <span id="ticket-qty" class="text-white font-bold">1</span>
+                            <button onclick="changeQty(1)" class="bg-[#2e3a60] w-7 h-7 rounded text-white">+</button>
+                        </div>
+                        <div class="absolute top-1 right-1 text-[8px] text-gray-500 cursor-pointer" onclick="reportBug(1)">●</div>
+                    </div>
+
+                    <div class="bg-[#1a203c] p-3 rounded-lg mb-3">
+                        <p class="text-[10px] text-gray-400">Tổng tiền:</p>
+                        <p id="ticket-total" class="text-emerald-400 font-bold text-lg cursor-pointer" onclick="reportBug(2)">$15</p>
+                    </div>
+
+                    <div class="bg-[#1a203c] p-3 rounded-lg mb-3">
+                        <p class="text-[10px] text-gray-400 mb-1">Mã giảm giá:</p>
+                        <input id="coupon-input" type="text" placeholder="Nhập mã..." class="w-full bg-[#0b0e1e] border border-[#2e3a60] rounded px-2 py-1 text-xs text-white">
+                        <button onclick="applyCoupon()" class="w-full bg-[#2e3a60] text-xs text-white py-1 rounded mt-2">Áp dụng</button>
+                        <p id="coupon-error" class="hidden text-[10px] text-red-400 mt-1 cursor-pointer" onclick="reportBug(3)"></p>
+                    </div>
+
+                    <button onclick="reportBug(1)" class="absolute bottom-1 -right-6 bg-emerald-500 hover:bg-emerald-600 text-white text-[10px] font-bold px-4 py-2 rounded-lg shadow-lg">Xác nhận Thanh toán</button>
+                </div>
+            </div>
+
+            <!-- Bên phải: checklist bug -->
+            <div class="w-1/2 flex flex-col justify-between">
+                <div class="space-y-4">
+                    <h4 class="text-sm font-bold text-gray-300">Danh sách Bug cần phát hiện (0/3):</h4>
+                    <ul class="space-y-3 text-xs">
+                        <li id="bug-task-1" class="bg-[#1a203c] p-3 rounded-lg border border-[#1f294d] flex items-center justify-between text-gray-400">
+                            <span>1. Lỗi hiển thị nút bấm (Tràn viền màn hình)</span>
+                            <span id="bug-status-1" class="text-red-500"><i class="fa-solid fa-circle-question"></i> Chưa tìm ra</span>
+                        </li>
+                        <li id="bug-task-2" class="bg-[#1a203c] p-3 rounded-lg border border-[#1f294d] flex items-center justify-between text-gray-400">
+                            <span>2. Lỗi Logic tính tiền (Số lượng mua bị âm)</span>
+                            <span id="bug-status-2" class="text-red-500"><i class="fa-solid fa-circle-question"></i> Chưa tìm ra</span>
+                        </li>
+                        <li id="bug-task-3" class="bg-[#1a203c] p-3 rounded-lg border border-[#1f294d] flex items-center justify-between text-gray-400">
+                            <span>3. Lỗi Crash mã giảm giá (Gõ GIAM50 bị lỗi 500)</span>
+                            <span id="bug-status-3" class="text-red-500"><i class="fa-solid fa-circle-question"></i> Chưa tìm ra</span>
+                        </li>
+                    </ul>
+                </div>
+                <div class="bg-[#0b0e1e] p-4 rounded-xl border border-[#1f294d] text-[11px] text-gray-400">
+                    <i class="fa-solid fa-info-circle text-cyan-400 mr-1"></i> <strong>Hướng dẫn:</strong> Tương tác với điện thoại ảo bên trái, click vào điểm bất thường để báo lỗi!
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

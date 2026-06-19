@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+{% block title %}Quy trình Debug — Tizia{% endblock %}
+
+{% block content %}
+<div class="w-full min-h-screen flex flex-col pb-10">
+    <header class="bg-[#12182d] border-b border-[#1f294d] px-6 py-3 flex justify-between items-center">
+        <div class="flex items-center space-x-4">
+            <a href="/coding" class="bg-[#1e2640] hover:bg-[#2e3a60] text-gray-300 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all">
+                <i class="fa-solid fa-arrow-left mr-1"></i> Quay lại
+            </a>
+            <span class="text-gray-400">|</span>
+            <span class="text-sm text-gray-300"><i class="fa-solid fa-bug mr-2 text-pink-400"></i>Quy trình Debug</span>
+        </div>
+    </header>
+
+    <div class="max-w-3xl mx-auto px-6 mt-6 w-full flex-grow space-y-6">
+        {% for s in scenarios %}
+        <div class="bg-[#12182d] p-6 rounded-2xl border border-[#1f294d]" id="scenario-{{ s.id }}">
+            <h3 class="text-sm font-bold text-pink-400 mb-3"><i class="fa-solid fa-triangle-exclamation mr-1"></i>Tình huống lỗi</h3>
+            <pre class="bg-[#0b0e1e] text-gray-300 text-xs p-4 rounded-xl border border-[#1f294d] mb-4 overflow-x-auto">{{ s.bug_code }}</pre>
+            <p class="text-sm text-gray-300 mb-4">{{ s.question }}</p>
+
+            <div class="space-y-2" id="options-{{ s.id }}">
+                {% for opt in s.options %}
+                <button onclick="DebugLabModule.choose('{{ s.id }}', {{ loop.index0 }}, {{ opt.correct|tojson }})"
+                        class="w-full text-left bg-[#1a203c] hover:bg-pink-500/10 text-xs text-gray-300 px-4 py-3 rounded-lg border border-[#1f294d] transition-colors">
+                    {{ opt.text }}
+                </button>
+                {% endfor %}
+            </div>
+
+            <div id="explanation-{{ s.id }}" class="hidden mt-4 bg-emerald-950/20 border border-emerald-500/30 rounded-xl p-4 text-sm text-emerald-400">
+                {{ s.explanation }}
+            </div>
+        </div>
+        {% endfor %}
+
+        <div class="text-center">
+            <button onclick="DebugLabModule.complete()" class="bg-pink-600 hover:bg-pink-700 text-white px-6 py-2.5 rounded-xl text-sm font-bold">
+                Hoàn thành tất cả (+70 XP)
+            </button>
+        </div>
+    </div>
+</div>
+
+<script>
+    const DebugLabModule = {
+        choose(scenarioId, index, isCorrect) {
+            const optionsBox = document.getElementById(`options-${scenarioId}`);
+            const buttons = optionsBox.querySelectorAll('button');
+            buttons.forEach(b => b.disabled = true);
+
+            buttons[index].className = isCorrect
+                ? 'w-full text-left bg-emerald-500/20 border border-emerald-500 text-emerald-400 text-xs px-4 py-3 rounded-lg'
+                : 'w-full text-left bg-red-500/20 border border-red-500 text-red-400 text-xs px-4 py-3 rounded-lg';
+
+            document.getElementById(`explanation-${scenarioId}`).classList.remove('hidden');
+
+            if (isCorrect) {
+                Toast.success('Chính xác!');
+            } else {
+                Toast.error('Chưa đúng, xem giải thích bên dưới.');
+            }
+        },
+        async complete() {
+            await UserModule.addXP(70);
+            await UserModule.addBadge('Tư duy Debug có hệ thống');
+            Toast.success('+70 XP! Đã rèn luyện tư duy debug.');
+            await UserModule.load();
+        }
+    };
+</script>
+{% endblock %}

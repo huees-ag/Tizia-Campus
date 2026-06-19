@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Tizia Tech Campus{% endblock %}</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/campus.css') }}">
+    {% block extra_head %}{% endblock %}
+</head>
+<body class="bg-[#0b0e1e] text-[#e2e8f0] font-sans min-h-screen">
+
+    <div id="toast-container" class="fixed bottom-6 right-6 z-[9999] flex flex-col gap-3"></div>
+
+    {% block content %}{% endblock %}
+
+    <script src="{{ url_for('static', filename='js/campus.js') }}"></script>
+    {% block extra_scripts %}{% endblock %}
+</body>
+</html>
