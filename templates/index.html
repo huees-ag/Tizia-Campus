@@ -22,8 +22,18 @@
 
     <div class="isometric-container w-full h-[720px] flex items-center justify-center relative my-2">
         <div class="isometric-map w-[950px] h-[650px] bg-[#161c33] rounded-3xl border-4 border-[#1f294d] relative shadow-[0_30px_60px_rgba(0,0,0,0.6)] flex items-center justify-center">
-
-            <div class="absolute bottom-20 left-20 isometric-building text-center">
+            <!-- CẢNH QUAN 1: CÔNG VIÊN SYNTAX (Kích hoạt Click) -->
+            <div onclick="openSyntaxParkModal()" class="absolute isometric-building text-center cursor-pointer" style="top: 10%; left: 10%;">
+                <div class="w-16 h-12 bg-emerald-950/40 border-2 border-emerald-500/40 rounded-xl flex items-center justify-center text-emerald-400 shadow-[0_0_15px_rgba(16,185,129,0.2)]">
+                    <i class="fa-solid fa-tree text-xl animate-pulse"></i>
+                </div>
+                <span class="text-[10px] bg-[#0b0e1e] px-1.5 py-0.5 rounded border border-[#1f294d] mt-2 block text-emerald-400 font-bold">C.Viên Syntax</span>
+            </div>
+             <!-- CẢNH QUAN 3: CON ĐƯỜNG NHỊ PHÂN -->
+            <div class="absolute bottom-[35%] left-[28%] isometric-building text-center pointer-events-none">
+                <div class="text-[10px] font-mono text-cyan-500/40 tracking-widest rotate-12">01011001 01101111</div>
+            </div>
+            <div onclick="openFirewallModal()" class="absolute bottom-20 left-20 isometric-building text-center">
                 <div class="w-16 h-12 bg-orange-600/20 border-2 border-orange-500 rounded-xl flex items-center justify-center text-orange-400">
                     <i class="fa-solid fa-shield-halved text-xl"></i>
                 </div>
@@ -64,7 +74,69 @@
 
         </div>
     </div>
+    <!-- MODAL 1: CỦA SỔ CỔNG FIREWALL -->
+<div id="firewall-modal" class="hidden fixed inset-0 bg-slate-950/80 backdrop-blur flex items-center justify-center z-50 p-4">
+    <div class="bg-[#12182d] border border-[#1f294d] rounded-2xl max-w-lg w-full p-6 shadow-2xl flex flex-col">
+        <div class="flex justify-between items-center border-b border-[#1f294d] pb-4 mb-4">
+            <span class="text-orange-500 font-bold"><i class="fa-solid fa-shield-halved mr-2"></i>Cấu hình tường lửa ngăn chặn DDoS</span>
+            <button onclick="closeFirewallModal()" class="text-gray-400 hover:text-white">✕</button>
+        </div>
+        <div class="space-y-4 text-xs">
+            <div class="bg-[#0b0e1e] p-4 rounded-xl border border-red-500/20 text-red-400">
+                ⚠️ <strong>Cảnh báo hệ thống:</strong> Phát hiện địa chỉ IP lạ <strong class="underline">192.168.1.99</strong> đang gửi liên tục 10,000 yêu cầu/giây vào máy chủ dữ liệu!
+            </div>
+            <p class="text-gray-400"><strong>Thử thách:</strong> Với tư cách là Quản trị mạng, hãy lựa chọn quy tắc lọc gói tin đúng nhất để áp dụng lên Firewall nhằm bảo vệ hệ thống:</p>
+            <div class="space-y-2">
+                <button onclick="checkFirewallAnswer('A')" class="w-full text-left bg-[#1a203c] p-3 rounded border border-[#1f294d] hover:bg-orange-500/10 font-mono">A. iptables -A INPUT -p tcp --dport 80 -j ACCEPT</button>
+                <button onclick="checkFirewallAnswer('B')" class="w-full text-left bg-[#1a203c] p-3 rounded border border-[#1f294d] hover:bg-emerald-500/10 font-mono">B. iptables -A INPUT -s 192.168.1.99 -j DROP</button>
+                <button onclick="checkFirewallAnswer('C')" class="w-full text-left bg-[#1a203c] p-3 rounded border border-[#1f294d] hover:bg-orange-500/10 font-mono">C. iptables -A INPUT -p icmp -j REJECT</button>
+            </div>
+        </div>
+    </div>
+</div>
 
+<!-- MODAL 2: CỬA SỔ CÔNG VIÊN SYNTAX ERROR -->
+<div id="syntax-modal" class="hidden fixed inset-0 bg-slate-950/80 backdrop-blur flex items-center justify-center z-50 p-4">
+    <div class="bg-[#12182d] border border-[#1f294d] rounded-2xl max-w-lg w-full p-6 shadow-2xl flex flex-col">
+        <div class="flex justify-between items-center border-b border-[#1f294d] pb-4 mb-4">
+            <span class="text-emerald-400 font-bold"><i class="fa-solid fa-tree mr-2"></i>Trạm chữa lành & giải tỏa căng thẳng</span>
+            <button onclick="closeSyntaxParkModal()" class="text-gray-400 hover:text-white">✕</button>
+        </div>
+        <div class="space-y-4">
+            <p class="text-xs text-gray-400">Chào mừng bạn đến với <strong>Công viên Syntax Error</strong>. Hãy lựa chọn một hoạt động để giải phóng căng thẳng ngay lập tức:</p>
+            <div class="grid grid-cols-2 gap-4">
+                <button onclick="triggerZenBreathing()" class="bg-[#1a203c] p-4 rounded-xl border border-[#1f294d] text-center hover:bg-purple-500/10 transition-all">
+                    <div class="text-2xl text-purple-400 mb-2"><i class="fa-solid fa-chair"></i></div>
+                    <span class="text-xs font-bold block text-gray-200">Ngồi ghế sạc RGB</span>
+                    <span class="text-[10px] text-gray-400 block mt-1">(Điều hòa hơi thở)</span>
+                </button>
+                <button onclick="openWishingWell()" class="bg-[#1a203c] p-4 rounded-xl border border-[#1f294d] text-center hover:bg-cyan-500/10 transition-all">
+                    <div class="text-2xl text-cyan-400 mb-2"><i class="fa-solid fa-water"></i></div>
+                    <span class="text-xs font-bold block text-gray-200">Giếng nguyện ước Bug</span>
+                    <span class="text-[10px] text-gray-400 block mt-1">(Xóa tan nỗi lo code)</span>
+                </button>
+            </div>
+
+            <!-- Khu vực điều hòa hơi thở ẩn -->
+            <div id="zen-zone" class="hidden bg-[#0b0e1e] p-6 rounded-xl border border-[#1f294d] text-center flex flex-col items-center justify-center">
+                <div id="breathing-circle" class="w-16 h-16 bg-purple-500/20 border-4 border-purple-500 rounded-full flex items-center justify-center text-[10px] text-purple-400 font-bold transition-all duration-[3000ms] scale-75">
+                    HÍT VÀO
+                </div>
+                <p id="breathing-text" class="text-xs text-gray-400 mt-4">Hãy hít một hơi thật sâu theo nhịp điệu của vòng tròn ảo...</p>
+            </div>
+
+            <!-- Khu vực Giếng nguyện ước ẩn -->
+            <div id="well-zone" class="hidden bg-[#0b0e1e] p-4 rounded-xl border border-[#1f294d] space-y-4">
+                <p class="text-xs text-gray-400"><strong>Giếng Nguyện Ước:</strong> Hãy nhập lỗi code khó chịu nhất bạn vừa gặp phải để ném trôi sông biến mất:</p>
+                <div class="flex space-x-2">
+                    <input type="text" id="bug-wish-input" class="w-full bg-[#12182d] border border-[#1f294d] text-xs text-cyan-400 rounded px-3 py-2 focus:outline-none" placeholder="Ví dụ: Lỗi sập server 500...">
+                    <button onclick="throwBugToWell()" class="bg-cyan-600 text-white px-4 py-2 rounded text-xs font-bold">Ném Bug</button>
+                </div>
+                <p id="well-response-text" class="hidden text-xs text-emerald-400 font-medium leading-relaxed bg-emerald-950/20 p-3 rounded-lg border border-emerald-500/30"></p>
+            </div>
+        </div>
+    </div>
+</div>
     <footer class="bg-[#12182d]/80 backdrop-blur border border-[#1f294d] p-4 rounded-2xl flex justify-between items-center text-xs text-gray-400 z-10">
         <div><i class="fa-solid fa-circle text-emerald-500 mr-2 animate-pulse"></i>Hệ thống AI Tizia đang điều hành toàn bộ khuôn viên</div>
         <div class="flex space-x-4">
@@ -72,4 +144,81 @@
         </div>
     </footer>
 </div>
+<script>
+    // ================= LOGIC GAME 1: CỔNG FIREWALL =================
+    function openFirewallModal() { document.getElementById('firewall-modal').classList.remove('hidden'); }
+    function closeFirewallModal() { document.getElementById('firewall-modal').classList.add('hidden'); }
+
+    async function checkFirewallAnswer(ans) {
+        if (ans === 'B') {
+            Toast.show("✓ Tuyệt vời! Bạn đã chặn thành công IP 192.168.1.99 phá hoại bằng quy tắc lọc INPUT DROP!", "success");
+            await fetch(`${API_URL}/user/${USER_ID}/add-xp`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ xpAmount: 100 })
+            });
+            setTimeout(() => { window.location.reload(); }, 2000);
+        } else {
+            Toast.show("✗ Cấu hình sai! Quy tắc này không chặn được IP đang tấn công mạng.", "error");
+        }
+    }
+
+    // ================= LOGIC GAME 2: CÔNG VIÊN SYNTAX ERROR =================
+    function openSyntaxParkModal() {
+        document.getElementById('syntax-modal').classList.remove('hidden');
+        document.getElementById('zen-zone').classList.add('hidden');
+        document.getElementById('well-zone').classList.add('hidden');
+    }
+    function closeSyntaxParkModal() { document.getElementById('syntax-modal').classList.add('hidden'); }
+
+    // Tính năng điều hòa hơi thở
+    function triggerZenBreathing() {
+        document.getElementById('well-zone').classList.add('hidden');
+        const zenZone = document.getElementById('zen-zone');
+        const circle = document.getElementById('breathing-circle');
+        const txt = document.getElementById('breathing-text');
+
+        zenZone.classList.remove('hidden');
+
+        // Hít vào (Phình to)
+        circle.className = "w-16 h-16 bg-purple-500/30 border-4 border-purple-500 rounded-full flex items-center justify-center text-[10px] text-purple-400 font-bold transition-all duration-[2000ms] scale-125";
+        circle.innerText = "HÍT VÀO";
+
+        setTimeout(() => {
+            // Thở ra (Thu nhỏ)
+            circle.className = "w-16 h-16 bg-purple-500/10 border-4 border-purple-500 rounded-full flex items-center justify-center text-[10px] text-purple-400 font-bold transition-all duration-[2000ms] scale-75";
+            circle.innerText = "THỞ RA";
+            txt.innerText = "✓ Sạc đầy 100% năng lượng cho Pet Tri Thức! Tinh thần của bạn đã được hồi phục.";
+        }, 2000);
+    }
+
+    // Tính năng giếng nguyện ước
+    function openWishingWell() {
+        document.getElementById('zen-zone').classList.add('hidden');
+        document.getElementById('well-zone').classList.remove('hidden');
+        document.getElementById('well-response-text').classList.add('hidden');
+        document.getElementById('bug-wish-input').value = "";
+    }
+
+    const wellResponses = [
+        "Hãy hít thở sâu. Mọi lập trình viên vĩ đại đều bắt đầu bằng những lỗi cú pháp. Bạn đang làm rất tốt!",
+        "Bug chỉ là một bài học ẩn danh. Hãy thư giãn 2 phút, uống một ngụm nước, câu trả lời sẽ tự hiện ra trước mắt bạn.",
+        "CSDL của Giếng Nguyện Ước đã xóa sạch lỗi lo lắng của bạn. Hãy tự tin tiến lên phía trước!"
+    ];
+
+    function throwBugToWell() {
+        const input = document.getElementById('bug-wish-input').value;
+        if (!input) {
+            Toast.show("Hãy nhập nỗi sợ hoặc lỗi code của bạn!");
+            return;
+        }
+
+        const responseText = document.getElementById('well-response-text');
+        const randomMsg = wellResponses[Math.floor(Math.random() * wellResponses.length)];
+
+        responseText.innerHTML = `<i class="fa-solid fa-sparkles mr-2 text-yellow-400 animate-spin"></i> <strong>Lời khuyên chữa lành:</strong> ${randomMsg}`;
+        responseText.classList.remove('hidden');
+        Toast.show("✓ Đã ném Bug lo lắng xuống giếng thành công!", "success");
+    }
+</script>
 {% endblock %}
